@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clearwave — Calm your mind. Ship better code.</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --teal:       #1D9E75;
+      --teal-light: #E1F5EE;
+      --teal-mid:   #9FE1CB;
+      --teal-dark:  #085041;
+      --bg:         #FAFAF8;
+      --surface:    #FFFFFF;
+      --border:     rgba(0,0,0,0.08);
+      --text:       #1A1A18;
+      --muted:      #6B6B67;
+      --faint:      #A8A8A4;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2.5rem;
+      background: rgba(250,250,248,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 500;
+      letter-spacing: -0.5px;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .logo span { color: var(--teal); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 14px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      background: var(--teal);
+      color: #fff !important;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 6rem 2rem 4rem;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--teal-light);
+      color: var(--teal-dark);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 14px;
+      border-radius: 100px;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.3px;
+    }
+    .badge-dot {
+      width: 6px; height: 6px;
+      background: var(--teal);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    h1 {
+      font-size: clamp(36px, 6vw, 56px);
+      font-weight: 300;
+      line-height: 1.15;
+      letter-spacing: -1.5px;
+      color: var(--text);
+      margin-bottom: 1.25rem;
+    }
+    h1 em {
+      font-style: italic;
+      color: var(--teal);
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto 2.5rem;
+      font-weight: 300;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--teal);
+      color: #fff;
+      border: none;
+      padding: 13px 28px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 13px 28px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-ghost:hover { background: var(--surface); transform: translateY(-1px); }
+
+    /* ── WAVE DIVIDER ── */
+    .wave-wrap { line-height: 0; margin-top: 3rem; }
+    .wave-wrap svg { width: 100%; }
+
+    /* ── FEATURES ── */
+    .features {
+      background: var(--teal-light);
+      padding: 5rem 2.5rem;
+    }
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--teal);
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 300;
+      letter-spacing: -0.8px;
+      margin-bottom: 3rem;
+      color: var(--teal-dark);
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid rgba(29,158,117,0.15);
+      border-radius: 16px;
+      padding: 1.75rem;
+      transition: transform 0.2s;
+    }
+    .feature-card:hover { transform: translateY(-3px); }
+    .feature-icon {
+      width: 44px; height: 44px;
+      background: var(--teal-light);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+    .feature-card h3 {
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: var(--teal-dark);
+    }
+    .feature-card p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ── ABOUT ── */
+    .about {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 6rem 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    @media (max-width: 640px) {
+      .about { grid-template-columns: 1fr; gap: 2.5rem; }
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { display: none; }
+    }
+
+    .about-visual {
+      background: var(--teal-light);
+      border-radius: 24px;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-rings {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ring {
+      position: absolute;
+      border: 1px solid rgba(29,158,117,0.2);
+      border-radius: 50%;
+      animation: expand 4s ease-out infinite;
+    }
+    .ring:nth-child(1) { width: 80px; height: 80px; animation-delay: 0s; }
+    .ring:nth-child(2) { width: 140px; height: 140px; animation-delay: 0.8s; }
+    .ring:nth-child(3) { width: 200px; height: 200px; animation-delay: 1.6s; }
+    .ring:nth-child(4) { width: 260px; height: 260px; animation-delay: 2.4s; }
+    @keyframes expand {
+      0% { opacity: 0.8; transform: scale(0.9); }
+      100% { opacity: 0; transform: scale(1.1); }
+    }
+    .ring-center {
+      width: 56px; height: 56px;
+      background: var(--teal);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+    }
+
+    .about-text h2 {
+      font-size: clamp(26px, 4vw, 36px);
+      font-weight: 300;
+      letter-spacing: -0.8px;
+      margin-bottom: 1.25rem;
+      line-height: 1.2;
+    }
+    .about-text p {
+      font-size: 15px;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      font-weight: 300;
+    }
+    .about-list {
+      list-style: none;
+      margin-top: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .about-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text);
+    }
+    .check {
+      width: 20px; height: 20px;
+      background: var(--teal-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* ── STATS ── */
+    .stats-strip {
+      background: var(--teal-dark);
+      padding: 3.5rem 2.5rem;
+      display: flex;
+      justify-content: center;
+      gap: 4rem;
+      flex-wrap: wrap;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-size: 40px;
+      font-weight: 300;
+      color: var(--teal-mid);
+      letter-spacing: -1px;
+      display: block;
+    }
+    .stat-label {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      margin-top: 4px;
+    }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials {
+      padding: 6rem 2.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 3rem;
+    }
+    .tcard {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+    }
+    .tcard-quote {
+      font-size: 15px;
+      color: var(--text);
+      font-weight: 300;
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+      font-style: italic;
+    }
+    .tcard-author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .avatar {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--teal-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--teal-dark);
+    }
+    .author-info .name {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .author-info .role {
+      font-size: 12px;
+      color: var(--faint);
+    }
+    .stars {
+      color: var(--teal);
+      font-size: 13px;
+      margin-bottom: 0.75rem;
+      letter-spacing: 2px;
+    }
+
+    /* ── PRICING ── */
+    .pricing {
+      background: var(--teal-light);
+      padding: 6rem 2.5rem;
+    }
+    .pricing-inner {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 3rem;
+    }
+    .pcard {
+      background: var(--surface);
+      border: 1px solid rgba(29,158,117,0.15);
+      border-radius: 16px;
+      padding: 2rem;
+      position: relative;
+    }
+    .pcard.featured {
+      border: 2px solid var(--teal);
+    }
+    .popular-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--teal);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 3px 14px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+    .plan-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .plan-price {
+      font-size: 40px;
+      font-weight: 300;
+      letter-spacing: -1.5px;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+    .plan-price sup { font-size: 20px; vertical-align: top; margin-top: 8px; display: inline-block; }
+    .plan-price span { font-size: 14px; color: var(--muted); font-weight: 400; }
+    .plan-desc {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .plan-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 1.75rem;
+    }
+    .plan-features li {
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text);
+    }
+    .plan-features li::before {
+      content: '';
+      width: 16px; height: 16px;
+      background: var(--teal-light);
+      border-radius: 50%;
+      flex-shrink: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='10' height='8' viewBox='0 0 10 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l2.5 2.5L9 1' stroke='%231D9E75' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    .plan-btn {
+      width: 100%;
+      padding: 11px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+    .pcard.featured .plan-btn {
+      background: var(--teal);
+      color: #fff;
+      border-color: var(--teal);
+    }
+    .plan-btn:hover { opacity: 0.8; transform: translateY(-1px); }
+
+    /* ── CTA ── */
+    .cta-section {
+      padding: 7rem 2.5rem;
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .cta-section h2 {
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: 300;
+      letter-spacing: -1px;
+      margin-bottom: 1rem;
+    }
+    .cta-section p {
+      color: var(--muted);
+      font-size: 16px;
+      margin-bottom: 2rem;
+      font-weight: 300;
+    }
+    .email-row {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .email-input {
+      padding: 13px 18px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 15px;
+      font-family: 'DM Sans', sans-serif;
+      width: 260px;
+      background: var(--surface);
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .email-input:focus { border-color: var(--teal); }
+    .email-input::placeholder { color: var(--faint); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-logo {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .footer-logo span { color: var(--teal); }
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .footer-links a:hover { color: var(--text); }
+    .footer-copy {
+      font-size: 12px;
+      color: var(--faint);
+    }
+
+    /* ── SCROLL FADE IN ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <a href="#" class="logo">clear<span>wave</span></a>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#testimonials">Reviews</a></li>
+      <li><a href="#cta" class="nav-cta">Get started</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero reveal">
+    <div class="badge"><span class="badge-dot"></span> Now in beta — free for 3 months</div>
+    <h1>Calm your mind.<br><em>Ship better code.</em></h1>
+    <p class="hero-sub">Clearwave helps developers build focus habits, reduce burnout, and stay in flow — all inside your existing workflow.</p>
+    <div class="btn-group">
+      <button class="btn-primary">Get started free</button>
+      <button class="btn-ghost">Watch demo</button>
+    </div>
+  </section>
+
+  <div class="wave-wrap">
+    <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" height="80">
+      <path d="M0,40 C200,10 400,70 600,40 C800,10 1000,70 1200,40 C1320,24 1380,50 1440,40 L1440,80 L0,80 Z" fill="#E1F5EE"/>
+    </svg>
+  </div>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <div style="max-width:900px;margin:0 auto;">
+      <p class="section-label reveal">What we offer</p>
+      <h2 class="section-title reveal">Everything you need<br>to stay in flow.</h2>
+      <div class="features-grid">
+
+        <div class="feature-card reveal">
+          <div class="feature-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#1D9E75" stroke-width="1.5"/><path d="M10 7v3l2 1.5" stroke="#1D9E75" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <h3>Focus timer</h3>
+          <p>Pomodoro-style sessions tuned for deep coding work, with smart break suggestions.</p>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10 Q10 4 16 10 Q10 16 4 10Z" stroke="#1D9E75" stroke-width="1.5" fill="none"/></svg>
+          </div>
+          <h3>Breath breaks</h3>
+          <p>Gentle 60-second guided resets between pull requests and long review sessions.</p>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 14 L7 9 L11 12 L15 6 L17 8" stroke="#1D9E75" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Flow tracking</h3>
+          <p>Detect your peak hours and automatically protect them from meetings and noise.</p>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="4" y="4" width="12" height="12" rx="3" stroke="#1D9E75" stroke-width="1.5"/><path d="M7 10h6M10 7v6" stroke="#1D9E75" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <h3>IDE plugin</h3>
+          <p>Works inside VS Code — no context switching, no new tabs, no extra apps.</p>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 3v2M10 15v2M3 10h2M15 10h2" stroke="#1D9E75" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="10" r="3" stroke="#1D9E75" stroke-width="1.5"/></svg>
+          </div>
+          <h3>Daily intentions</h3>
+          <p>Start each session with a single intention. End it with a short reflection.</p>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10a5 5 0 0010 0" stroke="#1D9E75" stroke-width="1.5" stroke-linecap="round"/><path d="M8 7h.01M12 7h.01" stroke="#1D9E75" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <h3>Burnout radar</h3>
+          <p>AI-powered signals that catch early burnout patterns before they become a problem.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about">
+      <div class="about-visual reveal">
+        <div class="about-rings">
+          <div class="ring"></div>
+          <div class="ring"></div>
+          <div class="ring"></div>
+          <div class="ring"></div>
+        </div>
+        <div class="ring-center">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 4v4M12 16v4M4 12h4M16 12h4" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="12" r="3" stroke="#fff" stroke-width="1.5"/></svg>
+        </div>
+      </div>
+
+      <div class="about-text reveal">
+        <p class="section-label">About clearwave</p>
+        <h2>Built by developers,<br>for developers.</h2>
+        <p>We burned out twice before we built this. Clearwave was born from the frustration of loving to code but hating what constant pressure does to your mind.</p>
+        <p>We believe great software is written by calm, rested humans — not heroes grinding through exhaustion.</p>
+        <ul class="about-list">
+          <li>
+            <div class="check">
+              <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#1D9E75" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            No tracking, no surveillance — your data stays yours
+          </li>
+          <li>
+            <div class="check">
+              <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#1D9E75" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            Works offline — no constant internet needed
+          </li>
+          <li>
+            <div class="check">
+              <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#1D9E75" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            Open source core — inspect everything we build
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-strip">
+    <div class="stat reveal">
+      <span class="stat-num">12k+</span>
+      <div class="stat-label">developers using it</div>
+    </div>
+    <div class="stat reveal">
+      <span class="stat-num">94%</span>
+      <div class="stat-label">report less burnout</div>
+    </div>
+    <div class="stat reveal">
+      <span class="stat-num">4.8★</span>
+      <div class="stat-label">average rating</div>
+    </div>
+    <div class="stat reveal">
+      <span class="stat-num">3min</span>
+      <div class="stat-label">avg. daily investment</div>
+    </div>
+  </div>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials" id="testimonials">
+    <p class="section-label reveal">Reviews</p>
+    <h2 class="section-title reveal" style="color:var(--text);">What developers say.</h2>
+    <div class="testimonials-grid">
+
+      <div class="tcard reveal">
+        <div class="stars">★★★★★</div>
+        <p class="tcard-quote">"I was skeptical. Now I do a 3-minute breath session every time I start a new task. My focus is unreal compared to before."</p>
+        <div class="tcard-author">
+          <div class="avatar">AM</div>
+          <div class="author-info">
+            <div class="name">Amir M.</div>
+            <div class="role">Senior engineer, Stripe</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tcard reveal">
+        <div class="stars">★★★★★</div>
+        <p class="tcard-quote">"The burnout radar caught me two weeks before I would have crashed. I took a day off and came back sharper. Worth every penny."</p>
+        <div class="tcard-author">
+          <div class="avatar">LS</div>
+          <div class="author-info">
+            <div class="name">Lena S.</div>
+            <div class="role">Lead dev, remote startup</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tcard reveal">
+        <div class="stars">★★★★★</div>
+        <p class="tcard-quote">"Fits right in VS Code. I literally don't have to leave my editor. The flow tracking showed me I'm sharpest between 9–11am. Game changer."</p>
+        <div class="tcard-author">
+          <div class="avatar">JK</div>
+          <div class="author-info">
+            <div class="name">Jay K.</div>
+            <div class="role">Freelance fullstack dev</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing" id="pricing">
+    <div class="pricing-inner">
+      <p class="section-label reveal">Pricing</p>
+      <h2 class="section-title reveal">Simple, honest pricing.</h2>
+      <div class="pricing-grid">
+
+        <div class="pcard reveal">
+          <div class="plan-name">Free</div>
+          <div class="plan-price"><sup>$</sup>0<span>/mo</span></div>
+          <p class="plan-desc">For developers just getting started with mindful coding.</p>
+          <ul class="plan-features">
+            <li>Focus timer (basic)</li>
+            <li>3 breath sessions/day</li>
+            <li>Weekly flow summary</li>
+            <li>VS Code plugin</li>
+          </ul>
+          <button class="plan-btn">Get started</button>
+        </div>
+
+        <div class="pcard featured reveal">
+          <div class="popular-badge">Most popular</div>
+          <div class="plan-name">Pro</div>
+          <div class="plan-price"><sup>$</sup>9<span>/mo</span></div>
+          <p class="plan-desc">For developers serious about sustainable performance.</p>
+          <ul class="plan-features">
+            <li>Everything in Free</li>
+            <li>Unlimited breath sessions</li>
+            <li>Burnout radar</li>
+            <li>Daily intentions</li>
+            <li>Advanced flow analytics</li>
+          </ul>
+          <button class="plan-btn">Start free trial</button>
+        </div>
+
+        <div class="pcard reveal">
+          <div class="plan-name">Team</div>
+          <div class="plan-price"><sup>$</sup>7<span>/seat</span></div>
+          <p class="plan-desc">For engineering teams that care about sustainable culture.</p>
+          <ul class="plan-features">
+            <li>Everything in Pro</li>
+            <li>Team dashboard</li>
+            <li>Manager insights</li>
+            <li>Slack integration</li>
+            <li>Priority support</li>
+          </ul>
+          <button class="plan-btn">Contact sales</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="cta">
+    <p class="section-label reveal">Get started</p>
+    <h2 class="reveal">Ready to find<br>your <em style="color:var(--teal);font-style:italic;">flow?</em></h2>
+    <p class="reveal">Join 12,000+ developers. Free for your first 3 months — no credit card needed.</p>
+    <div class="email-row reveal">
+      <input class="email-input" type="email" placeholder="your@email.com" />
+      <button class="btn-primary">Join waitlist</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="#" class="footer-logo">clear<span>wave</span></a>
+    <ul class="footer-links">
+      <li><a href="#">Features</a></li>
+      <li><a href="#">Pricing</a></li>
+      <li><a href="#">Blog</a></li>
+      <li><a href="#">Privacy</a></li>
+      <li><a href="#">Terms</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 Clearwave. Built with care.</p>
+  </footer>
+
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
